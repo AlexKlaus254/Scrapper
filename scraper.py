@@ -15,6 +15,7 @@ import random
 import re
 import logging
 import os
+import json
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException
 
@@ -38,20 +39,48 @@ def generate_user_agent():
         return "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
 
 
-def expand_sizes(size_range: str):
-    """Parse and expand size range like 'S-4XL' into a list."""
+# def expand_sizes(size_range: str):
+#     """Parse and expand size range like 'S-4XL' into a list."""
+#     sizes_order = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"]
+#     size_range = size_range.upper().replace("–", "-")
+#     match = re.search(r'([XSML\d]+)\s*-\s*(\d*X?L+)', size_range)
+#     if not match:
+#         return []
+#     start, end = match.groups()
+#     try:
+#         start_index = sizes_order.index(start)
+#         end_index = sizes_order.index(end)
+#         return sizes_order[start_index:end_index + 1]
+#     except ValueError:
+#         return [start, end]
+def expand_sizes(text: str):
+    """Expand size info from title string into full list of sizes."""
     sizes_order = ["XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL"]
-    size_range = size_range.upper().replace("–", "-")
-    match = re.search(r'([XSML\d]+)\s*-\s*(\d*X?L+)', size_range)
-    if not match:
-        return []
-    start, end = match.groups()
-    try:
-        start_index = sizes_order.index(start)
-        end_index = sizes_order.index(end)
-        return sizes_order[start_index:end_index + 1]
-    except ValueError:
-        return [start, end]
+    text = text.upper().replace("–", "-")  # normalize dashes
+
+    # 1. Match range like "S-XXL"
+    range_match = re.search(r'\b(XS|S|M|L|XL|2XL|3XL|4XL|5XL)\s*-\s*(XS|S|M|L|XL|2XL|3XL|4XL|5XL)\b', text)
+    if range_match:
+        start, end = range_match.groups()
+        try:
+            start_idx = sizes_order.index(start)
+            end_idx = sizes_order.index(end)
+            if start_idx <= end_idx:
+                return sizes_order[start_idx:end_idx + 1]
+        except ValueError:
+            pass
+
+    # 2. Match comma-separated sizes like "S, M, L"
+    comma_match = re.findall(r'\b(XS|S|M|L|XL|2XL|3XL|4XL|5XL)\b', text)
+    if comma_match:
+        return list(dict.fromkeys(comma_match))  # preserve order, remove dupes
+
+    # 3. Match single size
+    single_match = re.search(r'\b(XS|S|M|L|XL|2XL|3XL|4XL|5XL)\b', text)
+    if single_match:
+        return [single_match.group(1)]
+
+    return []
 
 
 # ------------------- Scraper Class ------------------- #
@@ -89,18 +118,34 @@ class YupooScraper:
             # Get final HTML and parse
             soup = BeautifulSoup(self.driver.page_source, 'html.parser')
 
+
+            # Extract album title from page
             # Extract album title from page
             title_tag = soup.find("span", class_="showalbumheader__gallerytitle")
             if title_tag:
                 raw_title = title_tag.get_text(strip=True)
-                # Remove currency and price info (e.g. ￥179, $100, ¥200)
-                title = re.sub(r'[¥￥$€£]\s?\d+(\.\d+)?\s*', '', raw_title).strip()
-                data['title'] = title
             else:
-                # Fallback to <title> tag
                 raw_title = soup.title.string.strip() if soup.title else "Untitled"
-                title = re.sub(r'[¥￥$€£]\s?\d+(\.\d+)?\s*', '', raw_title).strip()
-                data['title'] = title
+
+            # Remove price info
+            title_no_price = re.sub(r'[¥￥$€£]\s?\d+(\.\d+)?\s*', '', raw_title).strip()
+
+            # Extract size range using flexible regex (handles S-XXL, S to XXL, S ~ XXL, etc.)
+            size_pattern = r'\b([XSML\d]+)\s*[-–~to]+\s*(\d*X?L+)\b'
+            size_match = re.search(size_pattern, title_no_price.upper(), re.IGNORECASE)
+
+            if size_match:
+                size_text = size_match.group(0)
+                data['sizes'] = expand_sizes(size_text)
+            else:
+                data['sizes'] = []
+
+            # Remove matched size text from title
+            clean_title = re.sub(size_pattern, '', title_no_price, flags=re.IGNORECASE).strip()
+
+            # Final clean-up
+            clean_title = re.sub(r'\s{2,}', ' ', clean_title).strip(" -–~")
+            data['title'] = clean_title
 
             # --- Extract cover image ---
             cover_img_tag = soup.find("img", class_="autocover")
@@ -126,9 +171,7 @@ class YupooScraper:
             data["image_urls"] = image_urls
 
             # Extract sizes from title
-            size_match = re.search(r'([XSML\d]+)\s*[-–]\s*(\d*X?L+)', title.upper())
-            if size_match:
-                data['sizes'] = expand_sizes(size_match.group(0))
+            data['sizes'] = expand_sizes(title)
 
             logging.info(f"Scraped: {title} | {len(data['image_urls'])} images | Sizes: {data['sizes']}")
 
@@ -299,7 +342,8 @@ class YupooGUI:
 
         self.scraped_data = all_data
         save_path = os.path.join(os.getcwd(), "scraped_albums.json")
-        pd.DataFrame(all_data).to_json(save_path, indent=2)
+        with open(save_path, "w", encoding="utf-8") as f:
+            json.dump(all_data, f, indent=2, ensure_ascii=False)
 
         self.status_box.insert("end", f"\n📁 Scraping complete. Data saved to:\n{save_path}\n")
         self.status_box.see("end")

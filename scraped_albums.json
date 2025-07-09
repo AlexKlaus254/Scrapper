@@ -1,51 +1,20 @@
-{
-  "url":{
-    "0":"https:\/\/minkang.x.yupoo.com\/albums\/201771544?uid=1&isSubCate=false&referrercate=712891",
-    "1":"https:\/\/minkang.x.yupoo.com\/albums\/201769368?uid=1&isSubCate=false&referrercate=712891",
-    "2":"https:\/\/minkang.x.yupoo.com\/albums\/201771410?uid=1&isSubCate=false&referrercate=712891"
-  },
-  "title":{
-    "0":"25\/26 Benfica Retro Special Edition S-4XL",
-    "1":"25\/26 AC Milan third away S-4XL",
-    "2":"25\/26 Real Madrid Special Edition S-XXL"
-  },
-  "image_urls":{
-    "0":[
-      "https:\/\/photo.yupoo.com\/minkang\/6a33346f\/medium.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/6a33346f\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/83d1ec9d\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/1e5bb1cb\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/e3c8d015\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/0f6dcf96\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/5b63e341\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/ae71d5b2\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/ecaeb007\/big.jpeg",
-      "https:\/\/photo.yupoo.com\/minkang\/3635fe6c\/big.jpeg"
+[
+  {
+    "url": "https://minkang.x.yupoo.com/albums/201771544?uid=1&isSubCate=false&referrercate=712891",
+    "title": "25/26 Benfica Retro Special Edition",
+    "image_urls": [
+      "https://photo.yupoo.com/minkang/6a33346f/medium.jpeg",
+      "https://photo.yupoo.com/minkang/6a33346f/big.jpeg",
+      "https://photo.yupoo.com/minkang/83d1ec9d/big.jpeg",
+      "https://photo.yupoo.com/minkang/1e5bb1cb/big.jpeg",
+      "https://photo.yupoo.com/minkang/e3c8d015/big.jpeg",
+      "https://photo.yupoo.com/minkang/0f6dcf96/big.jpeg",
+      "https://photo.yupoo.com/minkang/5b63e341/big.jpeg",
+      "https://photo.yupoo.com/minkang/ae71d5b2/big.jpeg",
+      "https://photo.yupoo.com/minkang/ecaeb007/big.jpeg",
+      "https://photo.yupoo.com/minkang/3635fe6c/big.jpeg"
     ],
-    "1":[
-      "https:\/\/photo.yupoo.com\/minkang\/b1920709\/medium.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/a20d08f3\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/a2a57818\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/b1920709\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/1b28ec34\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/0ea27e20\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/8f071ee7\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/f2fcdb70\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/d762ff7c\/big.jpg"
-    ],
-    "2":[
-      "https:\/\/photo.yupoo.com\/minkang\/7bc2af02\/medium.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/19f37a42\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/57149646\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/7bc2af02\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/4b539635\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/44339d35\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/cd497b5c\/big.jpg",
-      "https:\/\/photo.yupoo.com\/minkang\/c9810c2d\/big.jpg"
-    ]
-  },
-  "sizes":{
-    "0":[
+    "sizes": [
       "S",
       "M",
       "L",
@@ -53,18 +22,21 @@
       "2XL",
       "3XL",
       "4XL"
-    ],
-    "1":[
-      "S",
-      "M",
-      "L",
-      "XL",
-      "2XL",
-      "3XL",
-      "4XL"
-    ],
-    "2":[
-
     ]
+  },
+  {
+    "url": "https://minkang.x.yupoo.com/albums/201771410?uid=1&isSubCate=false&referrercate=712891",
+    "title": "25/26 Real Madrid Special Edition S-XXL",
+    "image_urls": [
+      "https://photo.yupoo.com/minkang/7bc2af02/medium.jpg",
+      "https://photo.yupoo.com/minkang/19f37a42/big.jpg",
+      "https://photo.yupoo.com/minkang/57149646/big.jpg",
+      "https://photo.yupoo.com/minkang/7bc2af02/big.jpg",
+      "https://photo.yupoo.com/minkang/4b539635/big.jpg",
+      "https://photo.yupoo.com/minkang/44339d35/big.jpg",
+      "https://photo.yupoo.com/minkang/cd497b5c/big.jpg",
+      "https://photo.yupoo.com/minkang/c9810c2d/big.jpg"
+    ],
+    "sizes": []
   }
-}
+]
